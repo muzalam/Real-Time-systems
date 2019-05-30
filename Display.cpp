@@ -13,9 +13,9 @@ tatic DigitalOut red(LED_RED);
 static Serial pc(USBTX, USBRX, 115200); //serial conn
 
 static volatile canMessage_t rxMsg;
-Semaphore rxDone(1);
-Thread writer(osPriorityRealtime);
-Thread reader(osPriorityRealtime1);
+Semaphore rxDone(1); // Declaring semaphore for recieving
+Thread writer(osPriorityRealtime); //thred 1
+Thread reader(osPriorityRealtime1); // thread 2
 
 static void canReadTask(void);
 static void canWriteTask(void);
@@ -28,13 +28,13 @@ int main () {
     canInit(BD125000, true);
     pc.printf("Display --  \n");
 
-    status = reader.start(canReadTask);
-    assert(osOK == status);
-    status = writer.start(canWriteTask);
-    assert(osOK == status);
+    status = reader.start(canReadTask);//start thread 1
+    assert(osOK == status); //check thread 1 status
+    status = writer.start(canWriteTask);// start thread 2
+    assert(osOK == status); // check thread 2 status
 
     while (true) {
-      wait_ms(99999);
+      wait_ms(99999);// keep waiting as we have threads
     }
 }
 
