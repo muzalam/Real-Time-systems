@@ -8,7 +8,6 @@
 #include "counter.h"
 #include <assert.h>
 
-s 
 I2C i2c (PTE25 , PTE24) ;
 FXOS8700QAccelerometer acc ( i2c , FXOS8700CQ SLAVE ADDR1) ; // acceloremeter, send message to CAN
 
