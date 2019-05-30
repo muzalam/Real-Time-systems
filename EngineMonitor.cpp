@@ -46,19 +46,19 @@ int16t dummyx = acc.getY( raY) ; // acc reading
 
 void tempT( void ) {
 	pc.printf(" test count\t : %020lu\n" , counterTest);//number of the test runnign
-	static canMessage_t ackVal;
+	static canMessage_t ackVal; 
 	if (canReady ()) {
 		canRead(&ackVal ) ;
 		if ( ackVal . ID == 0x23 ) {
-			if ( counterTest < 1000) {
+			if ( counterTest < 1000) { //run 1000 times
 				counterStart() ;
 				canMessage_t txMsg = {0x23 , 8 , acc.getY(raY) , acc.getY(raY)// message place can line
 
 			};
-			bool txOk ;
-			txOk = canWrite(&txMsg) ;
-			fullTime = counterStop() - counterCompTime;
-			counterTest++;
+			bool txOk ; //reset boolean
+			txOk = canWrite(&txMsg) ;//sending message CAN
+			fullTime = counterStop() - counterCompTime; //counter stop
+			counterTest++;//increase counter
 		}
 	}
 }
